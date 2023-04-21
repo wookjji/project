@@ -1,0 +1,56 @@
+@charset "UTF-8";
+.dateall{
+	width:100%;
+	position: relative;
+	padding-top: 20px;
+	padding-left: 10px;
+	float: left;
+}
+.datebox{
+	width: 450px;
+	height: 200px;
+	padding-top : 20px;
+	padding-left : 10px;
+	border: 3px solid black;
+}
+.datetitle{
+	border: 3px solid black;
+	text-align: center;
+	width: 100px;
+	position: absolute;
+	background-color: black;
+	color: white;
+	font-weight: normal;
+	top: 9px;
+	left: 23px;
+}
+.datename{
+	width:55px;
+	border: none;
+	background-color: yellow;
+}
+.datename:focus{
+	outline: none;
+}
+.datetable{
+border-collapse: collapse;
+text-align: center;
+}
+.datetable > thead > tr > td{
+border: 1px solid black;
+font-size : 15px;
+font-weight: bold;
+background-color: #f7e600;
+height: 30px;
+}
+.datetable > tbody > tr > td{
+border: 1px solid black;
+height: 30px;
+}
+.date{
+	border:none;
+	text-align: center;
+}
+.datetable > tbody > tr > td:nth-child(1){
+background-color: yellow;
+}

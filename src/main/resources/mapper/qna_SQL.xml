@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="qna">
+    
+    <!-- qna 메인페이지  -->
+    <select id="qnaList" resultType="HashMap">
+    	select q.q_no, q.q_title, q.q_date from wookjji1.qna q order by q.q_no desc;
+    </select>
+    
+    
+    <!-- qna 글쓰기 페이지 글저장   -->
+    <insert id="write" parameterType="HashMap">
+    	insert into qna(q_title, q_content, q_pw) values (#{title}, #{content}, #{pw});
+    </insert>
+    
+    
+    <!-- qna 게시글 페이지  -->
+    <select id="detail" parameterType="int" resultType="com.project.web.Dto.QnaDTO">
+    	select q.q_no,q.q_date, q.q_title, q.q_content, q.q_answer from qna q where q.q_no = #{rownumber};
+    </select>
+    
+    
+    <!-- q_detail 글 비밀번호   -->
+    <select id="pw_check" parameterType="HashMap" resultType="String">
+    	select q.q_no from qna q where q.q_no=#{q_no} and q.q_pw = #{q_pw};
+    </select>
+    
+    <!-- q_modify 수정하기 페이지  -->
+    <select id="q_print" parameterType="int" resultType="HashMap">
+    	select q.q_no, q.q_title, q.q_content from qna q where q.q_no=#{q_no};
+    </select>
+    
+    <!-- 글 수정버튼 클릭  -->
+	<update id="modSave" parameterType="HashMap" >
+		update qna set
+		q_title=#{title}, q_content=#{content} where q_no=#{qno};
+	</update>
+    
+    <!-- 작성글 삭제하기 (수정하기에서 ) -->
+    <delete id="delete" parameterType="HashMap">
+    	delete from qna where q_no = #{qno};
+    </delete>
+    
+    
+    <!-- q_reple 답글 저장하기   -->
+    <update id="rep_print" parameterType="HashMap" >
+    	update qna set q_answer =#{reple} where q_no=#{q_no};
+    </update>
+    
+    <!-- 검색 기능  -->
+    <select id="qna_search" parameterType="HashMap" resultType="HashMap">
+    	select * from qna
+    		<choose>
+    			<when test="sort != null and search != null">
+    				where ${sort} like '%${search}%'
+    			</when>
+    		</choose>
+    		order by q_no desc limit #{no}, #{board_num};
+    </select>
+    
+    
+    <!-- 검색 후 페이징  -->
+    <select id="qna_count" parameterType="HashMap" resultType="int">
+		select count(q_no) from qna
+		<choose>
+			<when test="sort != null and search != null">
+				where ${sort} like '%${search}%'
+			</when>
+		</choose>    
+    </select>
+    
+    <select id="qna_init" resultType="HashMap">
+    	select * from qna order by q_no desc limit 0,15;
+    </select>
+    
+    <select id="qna_all" resultType="int">
+    	select count(q_no) from qna
+    </select>
+    
+    </mapper>

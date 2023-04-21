@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="state">
+	<select id="list"  parameterType="int" resultType="com.project.web.Dto.StateDTO">
+	
+	SELECT r.r_no,s.si_type,s.s_num,r.r_name,r.r_tel,r.r_count,r.r_in,r.r_out,r.r_today,p.p_method,p.p_amount,p.p_check FROM reservation r join site s ON r.s_no=s.s_no join payaccount p ON r.r_no=p.r_no
+	order BY r.r_today LIMIT #{number},15;
+	</select>
+	
+	<update id="permit" parameterType="com.project.web.Dto.StateDTO">
+		UPDATE payaccount
+		SET p_check = 1
+		WHERE r_no = #{r_no }
+	</update>
+	
+	<select id="result" parameterType="com.project.web.Dto.StateDTO" resultType="int">
+		SELECT p_check
+		FROM payaccount
+		WHERE r_no = #{r_no }
+	</select>
+
+	<!-- 검색 기능  -->
+	<select id="state_search" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM payaccount
+		order by n_no desc limit #{no},#{board_num};
+	</select>
+	
+	<!-- 검색 후 페이징  -->
+	<select id="state_count" resultType="int">
+		SELECT count(r.r_no) FROM reservation r join site s ON r.s_no=s.s_no join payaccount p ON r.r_no=p.r_no;
+	</select>
+	
+	
+</mapper>

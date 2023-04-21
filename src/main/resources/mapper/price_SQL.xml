@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="price">
+	<select id="list" resultType="com.project.web.Dto.PriceDTO">
+		SELECT si_type, si_price, si_pfs, si_pwe, si_hfs, si_hwe, si_lfs
+		FROM siteinfo
+		ORDER BY si_type DESC
+	</select>
+	<update id="change" parameterType="com.project.web.Dto.PriceDTO">
+		UPDATE siteinfo
+		SET si_pfs=#{si_pfs }, si_price=#{si_price }, si_pwe=#{si_pwe }, si_hfs=#{si_hfs }, si_hwe=#{si_hwe }, si_lfs=#{si_lfs }
+		WHERE si_type=#{si_type }
+	</update>
+	
+</mapper>

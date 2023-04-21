@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="refund">
+	<select id="list" resultType="com.project.web.Dto.RefndDTO">
+		SELECT ref.r_no,ref_name,r_tel,ref_bank,ref_check,p_amount,ref_number
+		FROM refund ref 
+		JOIN payaccount p ON ref.r_no = p.r_no 
+		JOIN reservation r ON ref.r_no = r.r_no
+	</select>
+	<update id="refund" parameterType="com.project.web.Dto.RefndDTO">
+		UPDATE refund
+		SET ref_check = 1
+		WHERE r_no = #{r_no }
+	</update>
+	<select id="result" resultType="int" parameterType="com.project.web.Dto.RefndDTO">
+		SELECT ref_check
+		FROM refund
+		WHERE r_no = #{r_no }
+	</select>	
+</mapper>

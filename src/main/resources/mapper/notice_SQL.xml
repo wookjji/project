@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="notice">
+    
+	<!-- 공지사항 메인페이지 -->
+	<select id="noticeList" resultType="HashMap">
+		select n.n_no,n.n_title, n.n_date, n.n_check, n.n_writer 
+		from wookjji1.notice n 
+		order by n.n_no desc;
+	</select>
+
+	<!-- 공지사항 게시글 페이지 -->
+	<select id="detail" parameterType="int"
+		resultType="com.project.web.Dto.NoticeDTO">
+		select n.n_no,n.n_title, n.n_date, n.n_content 
+		from notice n where
+		n.n_no=#{rownumber};
+	</select>
+	
+    <!-- 조회수 증가  -->
+	<update id="hitcheck" parameterType="int">
+		update notice 
+		set n_check = n_check +1 
+		where n_no=#{rownumber};
+	</update>
+
+	<!-- 공지사항 글쓰기 페이지 저장 -->
+	<insert id="write" parameterType="HashMap">
+		insert into notice(n_title,n_content) 
+		values (#{title},#{content});
+	</insert>
+
+	<!-- 글 수정버튼 클릭  -->
+	<update id="modify" parameterType="HashMap" >
+		update notice set
+		n_title=#{title},n_content=#{content} 
+		where n_no=#{rownumber};
+	</update>
+
+
+	<!-- 글 삭제하기 -->
+	<delete id="delete" parameterType="HashMap" >
+		delete from notice 
+		where n_no = #{rownumber};
+	</delete>
+	
+	
+	<!-- 검색 기능  -->
+	<select id="notice_search" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM notice
+		<choose>
+			<when test="sort != null and search != null">
+				where ${sort} like '%${search}%'
+			</when>
+		</choose>
+		order by n_no desc limit #{no},#{board_num};
+	</select>
+	
+	<!-- 검색 후 페이징  -->
+	<select id="notice_count" parameterType="HashMap" resultType="int">
+		SELECT count(n_no) FROM notice
+		<choose>
+			<when test="sort != null and search != null">
+				where ${sort} like '%${search}%'
+			</when>
+		</choose>
+	</select>
+	
+		<select id="notice_init" resultType="HashMap">
+		SELECT * FROM notice order by n_no desc limit 0,15;
+	</select>
+	
+	
+		<select id="notice_all" resultType="int">
+		SELECT count(n_no) FROM notice
+		</select>
+	
+    <!-- 관리자 로그인  -->
+    <select id="login" resultType="HashMap" parameterType="HashMap">
+    select * from admin where id=#{id} and pw=#{pw};
+	</select>
+	
+    </mapper>

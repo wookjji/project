@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="info">
+	<select id="pricelist" resultType="com.project.web.Dto.PriceDTO">
+		SELECT si_type ,si_pfs,si_pwe,si_hfs,si_hwe,si_lfs,si_price,si_limit
+		FROM siteinfo
+	</select>
+	<select id="list" resultType="com.project.web.Dto.SiteInDTO">
+		SELECT si_type, COUNT(*)AS count,
+		(SELECT si_limit FROM siteinfo WHERE site.si_type = siteinfo.si_type)AS si_limit
+		FROM site
+		GROUP BY si_type
+	</select>
+	
+	<update id="change" parameterType="com.project.web.Dto.SiteInDTO">
+		UPDATE siteinfo
+		SET si_type=#{si_type }, si_limit=#{si_limit }
+		WHERE si_type=#{si_type }
+	</update>
+	
+	<update id="lock" parameterType="com.project.web.Dto.SiteInDTO">
+		UPDATE site
+		SET s_active=if(s_active=0,1,0)
+		WHERE si_type=#{si_type } AND s_num=#{s_num }
+	</update>
+	
+	<select id="confirm" parameterType="com.project.web.Dto.SiteInDTO" resultType="int">
+		SELECT s_active
+		FROM site
+		WHERE si_type=#{si_type } AND s_num=#{s_num }
+	</select>
+	
+</mapper>

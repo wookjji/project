@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+.priceall {
+	position: relative;
+	padding-top : 20px;
+	padding-left: 10px;
+	float: left;
+	padding-top: 20px;
+}
+
+.pricebox {
+	width: 790px;
+	height: 140px;
+	padding-top : 20px;
+	padding-left : 10px;
+	border: 3px solid black;
+}
+
+.numb::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.pricetable > tbody > tr > td > .type{
+	text-align: center;
+	background-color: yellow;
+	width:70px;
+}
+.numb {
+	text-align: right;
+	border:none;
+	width: 100px;
+	height: 25px;
+	font-size: 15px;
+}
+
+.pricetitle {
+	border: 3px solid black;
+	text-align: center;
+	width: 100px;
+	position: absolute;
+	background-color: black;
+	color: white;
+	font-weight: normal;
+	top: 9px;
+	left: 23px;
+}
+.pricetable{
+border-collapse: collapse;
+text-align: center;
+}
+.pricetable > thead > tr > td{
+border: 1px solid black;
+font-size : 15px;
+font-weight: bold;
+background-color: #f7e600;
+height: 30px;
+}
+.pricetable > thead > tr > td:nth-child(1){
+	width: 70px;
+	
+}
+.pricetable > thead > tr > td:nth-child(8){
+border: none;
+background-color: white;
+}
+
+.pricetable > tbody > tr > td{
+border: 1px solid black;
+height: 30px;
+}
+.pricetable > tbody > tr > td:nth-child(1){
+background-color: yellow;
+}
+.pricetable > tbody > tr > td:nth-child(8){
+border: none;
+}
+.pricetable > tbody > tr > td > .fix{
+	border: 1px solid black;
+	border-radius: 5px;
+	width:50px;
+	height:30px;
+}
+

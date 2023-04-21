@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+   <mapper namespace="review">
+   
+   <!-- 이용후기 메인페이지  -->
+   <select id="review_init" resultType="HashMap">
+      select A.rv_no as rv_no, A.rv_title as rv_title, A.rv_date as rv_date, 
+      replace(B.r_name , substring(B.r_name ,2,1), '*') as rv_writer
+      from review as A
+      left join reservation as B
+      on A.r_no = B.r_no where A.rv_hide=0
+      order by A.rv_no desc;
+   </select>
+   
+   
+   <!-- 이용후기 글 숨김 기능  -->
+   <update id="hide" parameterType="int">
+      update review set
+      rv_hide=1 where rv_no=#{qno};   
+   </update>
+   <update id="hide_cancel" parameterType="int">
+      update review set
+      rv_hide=0 where rv_no=#{qno};   
+   </update>
+   
+   
+   <!-- 이용후기 숨김 글  -->
+   <select id="admin_review_init" resultType="HashMap">
+      select A.rv_no as rv_no, A.rv_title as rv_title, A.rv_date as rv_date, A.rv_hide as rv_hide,
+      replace(B.r_name , substring(B.r_name ,2,1), '*') as rv_writer
+      from review as A
+      left join reservation as B
+      on A.r_no = B.r_no
+      order by A.rv_no desc;
+   </select>
+   
+   
+   <!-- 예약번호 확인  -->
+   <select id="rno_check" resultType="HashMap">
+      select r.r_no, r.r_name, p.p_check 
+      from reservation r 
+      join payaccount p on r.r_no = p.r_no
+      where p.p_check =1 and r.r_no = #{r_no};
+   </select>
+   
+   
+   <!-- 예약번호 글쓰기에 받기  -->
+   <select id="review_check" parameterType="String" resultType="Integer">
+      select rv_no from review where r_no=#{rno};
+   </select>
+   
+   
+   <!-- 이용후기 글 저장하기  -->
+   <insert id="reviewSave" parameterType="com.project.web.Dto.ReviewDTO" >
+      insert into review (rv_title, rv_content,r_no, rv_photo1, rv_photo2, rv_photo3, rv_date) 
+      values (#{rv_title}, #{rv_content} ,#{r_no}, #{rv_photo1}, #{rv_photo2}, #{rv_photo3}, #{rv_date });
+   </insert>
+   
+   
+   <!-- 이용후기 게시글 페이지  -->
+   <select id="detail" parameterType="int" resultType="com.project.web.Dto.ReviewDTO">
+      select rv_no, rv_title, rv_date,rv_content, rv_photo1, rv_photo2, rv_photo3
+      from review
+      where rv_no=#{rownumber};
+   </select>
+   
+   
+   <!-- 검색 기능  -->
+    <select id="review_search" parameterType="HashMap" resultType="HashMap">
+       select * from review
+          <choose>
+             <when test="sort != null and search != null">
+                where ${sort} like '%${search}%'
+             </when>
+          </choose>
+          order by rv_no desc limit #{no}, #{board_num};
+    </select>
+    
+    
+    <!-- 검색 후 페이징  -->
+    <select id="review_count" parameterType="HashMap" resultType="int">
+      select count(rv_no) from review
+      <choose>
+         <when test="sort != null and search != null">
+            where ${sort} like '%${search}%'
+         </when>
+      </choose>    
+    </select>
+    
+  
+    <select id="review_all" resultType="int">
+       select count(rv_no) 
+       from review;
+    </select>
+   
+   </mapper>

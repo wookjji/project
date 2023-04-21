@@ -1,0 +1,75 @@
+@charset "UTF-8";
+/* font 
+font-family: 'Edu NSW ACT Foundation', cursive; 귀여운
+font-family: 'Dancing Script', cursive; 필기체 
+*/
+
+body{
+background-color: #DCEBFF;
+width:1280px;;
+height:720px;
+
+}
+.main{
+margin:0;
+padding:0;
+position:relative;
+width:auto;
+height:auto;
+}
+.head{
+position:relative;
+margin:0px;
+top:0px;
+left:6%;
+width:1250px;
+height:100px;
+background-color: gray;
+border-radius: 10px 10px 0px 0px;
+}
+.m_image{
+background-image:url('/resources/image/camping3.jpeg');
+width:1250px;
+height:520px;
+position: relative;
+left:6%;
+z-index: 0;
+
+}
+.cal_f{
+position:relative;
+left:6%;
+width:1250px;
+height:300px;
+background-color: gray;
+box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+z-index: 1;
+}
+.main_text{
+position:relative;
+left:10%;
+top:5%;
+font-family: 'Edu NSW ACT Foundation', cursive;
+ font-size: 80px;
+ color:#E6E6E6;
+ opacity: 0.9;
+ z-index: 4;
+}
+.cal_m{
+	border-style:none;
+	position:absolute;
+	left:12%;
+	top:57%;
+	width:1100px;
+	height:150px;
+	background-color:white;
+	z-index: 5;
+	border-radius: 10px;
+	float: left;
+}
+.cal_m cal_s{
+	width:275px;
+	background-color: black;
+	z-index: 6;
+}
