@@ -25,7 +25,7 @@ public class Util {
 	public String fileSave(String path, MultipartFile si_photo1) throws IOException {
 		File upFile = new File(path);
 		if (!upFile.exists()) {
-			upFile.mkdirs();// 경로까지 폴더가 없다면 다 만들어주세요.
+			upFile.mkdirs();
 		}
 		String fileName1 = UUID.randomUUID().toString() + "_" + si_photo1.getOriginalFilename();
 		// 파일경로 + 파일명으로 만들어줍니다(경로, 파일명)
